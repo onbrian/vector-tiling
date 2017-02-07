@@ -1,0 +1,15 @@
+{
+  "name": "d3_demo_env",
+  "version": "1.0.0",
+  "description": "demo environment using d3 charting to test aggregation algorithms",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "brian",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.5.5",
+    "express": "^4.14.0"
+  }
+}
