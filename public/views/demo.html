@@ -1,13 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- custom css -->
     <link rel="stylesheet" type="text/css" href="../css/demo.css">
+    <!-- bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jquery cdn -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- underscore.js cdn -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <!-- google charts cdn -->
+    <!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
+    <!-- canvasjs cdn -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
+    <!-- bootstrap.js cdn -->
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div id="chart_div"></div>
+    <div id="container">
+        <div id="chart_container"></div>
+
+        <div id="zoom_container">
+            <div id="button_container">
+                <h4 id="zoom_grid_title">Zoom</h4>
+                <button id="reset_button">
+                    Reset
+                </button>
+                <div id="zoom_grid">
+                    <button class="zoom_button" id="zoom_q2">2</button>
+                    <button class="zoom_button" id="zoom_q1">1</button>
+                    <button class="zoom_button" id="zoom_q3">3</button>
+                    <button class="zoom_button" id="zoom_q4">4</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- import geojson_vt library -->
     <script src="../js/geojson_vt_src/index.js"></script>
@@ -20,12 +47,17 @@
 
     <!-- no dependencies -->
     <script src="../js/custom_vt/geometry.js"></script>
+
     <!-- no dependencies -->
     <script src="../js/custom_vt/quadrant.js"></script>
+    <!-- no dependences (yet) -->
+    <script src="../js/custom_vt/transform.js"></script>
 
     <script src="../js/custom_vt/clip.js"></script>
     <script src="../js/custom_vt/tile.js"></script>
-    <script src="../js/google_charts/charting_functions.js"></script>
+
+    <script src="../js/charting/canvas_functions.js"></script>
+    <!--<script src="../js/google_charts/charting_functions.js"></script>-->
     <script src="../js/demo.js"></script>
 </body>
 </html>

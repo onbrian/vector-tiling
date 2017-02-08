@@ -4,7 +4,12 @@
 // assumes no backtracking (points are sorted by x-coordinate)
 // optimize with binary search and bounding box
 // need to handle single point case
-function clipLineX(line, x1, x2)
+
+
+// clips line <line> between two lines parallel to axis <axis>
+// the two lines are represented by intercepts <x1> and <x2>
+
+function clipLine(line, axis, intersect, x1, x2)
 {
 	var OutBoundsEnum = {
 		FALSE: 0,
@@ -23,33 +28,33 @@ function clipLineX(line, x1, x2)
 		return OutBoundsEnum.FALSE;
 	}
 
-	var clippedLine = [];
-
 	// edge cases
 
 	// no points
 	if (line.length === 0)
 	{
-		return clippedLine;
+		return [];
 	}
 	// single point
 	else if (line.length === 1)
 	{
 		// single point is in bounds
-		if (checkBounds(line[0]) === OutBoundsEnum.FALSE)
+		if (checkBounds(line[0][axis]) === OutBoundsEnum.FALSE)
 		{
-			return line;
+			return [];
 		}
-		return clippedLine;
+		return [];
 	}
+
+	var clippedLine = [];
 
 	// at least two points... initiate algorithm
 	for (var i = 0, prevInBounds = OutBoundsEnum.FALSE, 
-			 p = null; i < line.length; i++)
+			 p = null, clippedLine = []; i < line.length; i++)
 	{
 		p = line[i];
 
-		var currInBounds = checkBounds(p[0])
+		var currInBounds = checkBounds(p[axis])
 
 		// initial case
 		if (i == 0)
@@ -75,8 +80,8 @@ function clipLineX(line, x1, x2)
 			{
 				var boundary = prevInBounds === OutBoundsEnum.LEFT ? x1 : x2;
 				// no need to add intersection if current point lies on boundary
-				if (p[0] != boundary)
-					clippedLine.push(Geometry.intersectX(line[i - 1], p, boundary));
+				if (p[axis] != boundary)
+					clippedLine.push(intersect(line[i - 1], p, boundary));
 			}
 
 			// add point regardless of case
@@ -91,8 +96,13 @@ function clipLineX(line, x1, x2)
 			{
 				var boundary = currInBounds === OutBoundsEnum.LEFT ? x1 : x2;
 				// no need to add intersection if prev point lies on boundary
-				if (line[i - 1][0] != boundary)
-					clippedLine.push(Geometry.intersectX(line[i - 1], p, boundary));
+				if (line[i - 1][axis] != boundary)
+					clippedLine.push(intersect(line[i - 1], p, boundary));
+
+
+				// add line segment and start new one
+				/*clippedLines.push(clippedLine);
+				clippedLine = [];*/
 			}
 			// prev point was out of bounds, but on other side/boundary
 			// <--|-----|-- or --|-----|-->
@@ -100,13 +110,22 @@ function clipLineX(line, x1, x2)
 			{
 				// add both intersections
 				var boundary = prevInBounds === OutBoundsEnum.LEFT ? x1 : x2;
-				clippedLine.push(Geometry.intersectX(line[i - 1], p, boundary));
+				clippedLine.push(intersect(line[i - 1], p, boundary));
 				boundary = currInBounds === OutBoundsEnum.LEFT ? x1 : x2;
-				clippedLine.push(Geometry.intersectX(line[i - 1], p, boundary));
+				clippedLine.push(intersect(line[i - 1], p, boundary));
+				
+				// add line segment and start new one
+				/*
+				clippedLines.push(clippedLine);
+				clippedLine = [];*/
 			}
 			// otherwise don't need to do anything if out of bounds on same side
 		}
 		prevInBounds = currInBounds;
 	}
+	/*
+	if (clipLine.length > 0)
+		clippedLines.push(clippedLine);
+	*/
 	return clippedLine;
 }

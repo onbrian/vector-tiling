@@ -3,61 +3,41 @@
 
 Tile.prototype.subtile = function()
 {
+	// temp guard for empty tiles
+	// no points -- can't drill down any further
+	if (this.lines.length === 0)
+	{
+		console.log("empty!");
+		return [this, this, this, this];
+	}
+
+	var subtiles = [];
 	// compute new quadrants for each subtile
 	var newQuadrants = this.quadrant.getSubQuadrants();
 	// iterate through all points and divide into quadrants
-	//for (var i = 0; i < )
+	for (var i = 0; i < 4; i++)
+	{
+		var subTile = new Tile(newQuadrants[i], this.lines);
+		subtiles.push(subTile);
+	}
+	return subtiles;
 }
 
 // a set of points and the quadrant that contains them
-function Tile(quadrant, points)
+function Tile(quadrant, lines)
 {
 	//this.points = points;
 	this.quadrant = quadrant;
-	this.points = [];
 
-	for (var i = 0, insideQuadrant = true, p = null; i++; i < points.length)
-	{
-		p = points[i];
-
-		// special case for entry
-		if (i == 0)
-		{
-			if (quadrant.insideQuadrant(p))
-			{
-				this.points.push(p);
-			}
-			else
-			{
-				// set to false
-				insideQuadrant != insideQuadrant;
-			}
-			continue;
-		}
-		// current point is inside quadrant
-		else if (quadrant.insideQuadrant(p))
-		{
-			// previous point was also inside quadrant
-			// just add current point
-			if (insideQuadrant)
-			{
-				this.points.push(p);
-			}
-			// previous point was outside quadrant
-			// add two points: intersection with border of quadrant
-			// and this current point
-			else
-			{
-
-				// set to true
-				insideQuadrant != insideQuadrant;
-			}
-
-		}
-		// current point is outside quadrant
-		else
-		{
-			
-		}
+	// create own copy of each line
+	this.lines = lines.slice();
+	for (var i = 0, line = null; i < lines.length; i++)
+	{	
+		line = this.lines[i];
+		line = clipLine(line, Geometry.X_AXIS, Geometry.intersectX,
+						quadrant.minX, quadrant.maxX);
+		line = clipLine(line, Geometry.Y_AXIS, Geometry.intersectY,
+						quadrant.minY, quadrant.maxY);
+		this.lines[i] = line;
 	}
 }

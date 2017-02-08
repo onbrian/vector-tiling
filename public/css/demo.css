@@ -1,0 +1,54 @@
+#container {
+	width: 600px;
+}
+
+#chart_container {
+	float: left;
+}
+
+#zoom_container {
+	width: 200px;
+	height: 400px;
+	float:right;
+}
+
+#button_container {
+	width: 200px;
+	/* center vertically */
+	position: relative;
+  	top: 50%;
+  	transform: translateY(-50%);
+}
+
+#reset_button {
+	/* center horizontally*/
+	display: block;
+	margin: auto;
+
+	/* add bottom gap between this button and grid */
+	margin-bottom: 10px;
+}
+
+#zoom_grid {
+	width: 80px;
+	padding: 0;
+	/* remove whitespace gap between buttons in grid */
+	font-size: 0;
+	/* center horizontally */
+	margin: auto; 
+	/* center vertically */
+	/*
+	position: relative;
+  	top: 50%;
+  	transform: translateY(-50%);*/
+}
+
+#zoom_grid_title {
+	text-align: center;
+}
+
+.zoom_button {
+	height: 40px;
+	width: 40px;
+	font-size: 16px;
+}

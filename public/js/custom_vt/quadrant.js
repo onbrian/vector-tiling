@@ -2,23 +2,23 @@ Quadrant.prototype.getSubQuadrants = function()
 {
 	// top right
 	// x: [midX, maxX)
-	// y: [minY, midY)
-	var quadOne = new Quadrant(1, this.midX, this.maxX, this.minY, this.midY),
+	// y: [midY, maxY)
+	var quadOne = new Quadrant(1, this.midX, this.maxX, this.midY, this.maxY),
 
 	// top left
 	// x: [minX, midX)
-	// y: [minY, midY)
-		quadTwo = new Quadrant(2, this.minX, this.midX, this.minY, this.midY),
+	// y: [midY, maxY)
+	    quadTwo = new Quadrant(2, this.minX, this.midX, this.midY, this.maxY),
 
 	// bottom left
 	// x: [minX, midX)
-	// y: [midY, maxY)
-	    quadThree = new Quadrant(3, this.minX, this.midX, this.midY, this.maxY),
+	// y: [minY, midY)
+		quadThree = new Quadrant(3, this.minX, this.midX, this.minY, this.midY),
 
 	// bottom right
 	// x: [midX, maxX)
-	// y: [midY, maxY)
-	    quadFour = new Quadrant(4, this.midX, this.maxX, this.midY, this.maxY);
+	// y: [minY, midY)
+	    quadFour = new Quadrant(2, this.midX, this.maxX, this.minY, this.midY) 
 
 	return [quadOne, quadTwo, quadThree, quadFour];
 }
