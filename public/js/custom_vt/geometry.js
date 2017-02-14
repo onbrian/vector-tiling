@@ -62,12 +62,20 @@ var Geometry = (function()
 		return max;
 	}
 
+	var triangleArea = function(a, b, c)
+	{
+		return Math.abs((a[0] - c[0]) 
+			* (b[1] - a[1]) - (a[0] - b[0]) 
+			* (c[1] - a[1]));
+	}
+
 	return {
 		intersectX: intersectX,
 		intersectY: intersectY,
 		getMinCoordVal: getMinCoordVal,
 		getMaxCoordVal: getMaxCoordVal,
 		X_AXIS: X_AXIS,
-		Y_AXIS: Y_AXIS
+		Y_AXIS: Y_AXIS,
+		triangleArea: triangleArea
 	}
 })();

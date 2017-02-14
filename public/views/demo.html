@@ -22,9 +22,12 @@
 
         <div id="zoom_container">
             <div id="button_container">
-                <h4 id="zoom_grid_title">Zoom</h4>
-                <button id="reset_button">
+                <h3 id="zoom_grid_title">Zoom (0)</h3>
+                <button id="reset_button" class="undo_button">
                     Reset
+                </button>
+                <button id="zoomout_button" class="undo_button">
+                    Zoom Out
                 </button>
                 <div id="zoom_grid">
                     <button class="zoom_button" id="zoom_q2">2</button>
@@ -50,14 +53,24 @@
 
     <!-- no dependencies -->
     <script src="../js/custom_vt/quadrant.js"></script>
-    <!-- no dependences (yet) -->
+
+    <!-- no dependencies (yet) -->
     <script src="../js/custom_vt/transform.js"></script>
+
+    <!-- no dependencies -->
+    <script src="../js/custom_vt/minHeap.js"></script>
+    <!-- no dependencies -->
+    <!--<script src="../js/custom_vt/rdp_simplify.js"></script>-->
+
+    <script src="../js/custom_vt/dynamicVW.js"></script>
 
     <script src="../js/custom_vt/clip.js"></script>
     <script src="../js/custom_vt/tile.js"></script>
 
+    <script src="../js/custom_vt/vectorTiler.js"></script>
     <script src="../js/charting/canvas_functions.js"></script>
     <!--<script src="../js/google_charts/charting_functions.js"></script>-->
+
     <script src="../js/demo.js"></script>
 </body>
 </html>

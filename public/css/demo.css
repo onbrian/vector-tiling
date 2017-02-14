@@ -20,7 +20,7 @@
   	transform: translateY(-50%);
 }
 
-#reset_button {
+.undo_button {
 	/* center horizontally*/
 	display: block;
 	margin: auto;
@@ -45,6 +45,7 @@
 
 #zoom_grid_title {
 	text-align: center;
+	margin: 10px;
 }
 
 .zoom_button {

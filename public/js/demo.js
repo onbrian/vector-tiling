@@ -1,3 +1,9 @@
+// sort points by their "areas"
+function pointComparator(p1, p2)
+{
+  return p1[2] - p2[2];
+}
+
 var line1 = [
   [1,  12],
   [5,  34],
@@ -34,34 +40,55 @@ var line2 = [
   [39, 2]
 ];
 
-//console.log(Geometry.getMinCoordVal(Geometry.X_AXIS, [line1, [[100, 10]]]));
-
+//console.log(line1);
+//var ranked = Simplify.VisvalWhyattRank(line1);
+//console.log(ranked)
 
 var lines = [line1, line2]
-// initialize base quadrant
-var quadrant = new Quadrant(0, 0, 40, 0, 40);
-// initialize base tile with quadrant and a line
-var baseTile = new Tile(quadrant, lines);
+//var lines = [[[1, 0], [0, 1], [1, 2], [2, 1], [1, 0]]]
+var vt = new VectorTiler(lines);
 
-var subtiles = baseTile.subtile();
-console.log(lines);
-var canvasBaseData = Transform.linesToCanvasObjects(baseTile.lines);
+console.log(vt);
+
+
+function getZoomTitle(level)
+{
+  return "Zoom (" + level + ")";
+}
+
+// current tile being rendered
+var currentTile = vt.baseTile;
 window.onload = function () 
 {
-
-  // initialize canvas chart
-  var chart = CanvasHelper.initializeSqChart("chart_container", 400, 
-                                             0, 40, 20,
-                                             0, 40, 20, null);
-
-    // set data
-  chart.options.data = canvasBaseData;
+  var chart = CanvasHelper.tileToChart("chart_container", 410, vt.baseTile);
 
   // attach handler to reset button
   $("#reset_button").on("click", function()
   {
-    CanvasHelper.renderTile(chart, baseTile);
-    subtiles = baseTile.subtile();
+    CanvasHelper.renderTile(chart, vt.baseTile);
+    currentTile = vt.baseTile;
+
+    // update title
+    $("#zoom_grid_title").html(getZoomTitle(currentTile.zoomLevel));
+  });
+
+  // attach handle to zoom out button
+  $("#zoomout_button").on("click", function()
+  {
+    if (currentTile.zoomLevel == 0)
+    {
+      alert("already at base level!");
+      return;
+    }
+
+    // fetch parent tile and render
+    var parentLabel = new TileLabel(currentTile.label.getParentSeq());
+    var parentTile = vt.getTile(parentLabel);
+    CanvasHelper.renderTile(chart, parentTile);
+    currentTile = parentTile;
+
+    // update title
+    $("#zoom_grid_title").html(getZoomTitle(currentTile.zoomLevel));
   });
 
   // attach handlers to zoom buttons
@@ -72,11 +99,16 @@ window.onload = function ()
     {
       $(quadrantButtonIDs[i]).on("click", function()
       {
-        CanvasHelper.renderTile(chart, subtiles[i]);
-        subtiles = subtiles[i].subtile(); 
+        // fetch child tile and render
+        var childLabel = new TileLabel(currentTile.label.getChildSeq(i + 1));
+        var childTile = vt.getTile(childLabel);
+        CanvasHelper.renderTile(chart, childTile);
+        currentTile = childTile;
+
+        // update title
+        $("#zoom_grid_title").html(getZoomTitle(currentTile.zoomLevel));
       })
     })(i);
   }
-
   chart.render();
 }
